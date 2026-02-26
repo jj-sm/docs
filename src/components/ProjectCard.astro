@@ -1,0 +1,260 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  url: string;
+  labels?: string[];
+  packageLabel?: string;
+  packageUrl?: string;
+  sourceUrl?: string;
+}
+
+const { title, description, image, url, labels, packageLabel, packageUrl, sourceUrl } = Astro.props;
+
+function seedHash(seed: string) {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return Math.abs(hash);
+}
+
+const seed = seedHash(title);
+const hue1 = seed % 360;
+const hue2 = (seed + 110) % 360;
+const hue3 = (seed + 220) % 360;
+---
+
+<div class="project-card">
+  {image ? (
+    <img src={image} alt={title} class="card-image" />
+  ) : (
+    <div
+      class="card-gradient"
+      style={`--c1: hsl(${hue1} 95% 62%); --c2: hsl(${hue2} 92% 58%); --c3: hsl(${hue3} 90% 58%);`}
+    >
+      <div class="grain"></div>
+    </div>
+  )}
+  <div class="card-content">
+    <div>
+      <h3 style="font-family: monospace;">{title}</h3>
+      {labels && labels.length > 0 && (
+        <div class="labels-container">
+          {labels.map((label) => (
+            <span class="label">{label}</span>
+          ))}
+        </div>
+      )}
+      <p class="description">{description}</p>
+    </div>
+    <div class="buttons-container">
+      <a href={url} class="card-button card-button-primary">
+        <img src="/docs.svg" alt="" class="button-icon" />
+        Docs
+      </a>
+      {packageLabel && packageUrl && (
+        <a href={packageUrl} class="card-button card-button-package" target="_blank" rel="noopener noreferrer">
+          <img src="/download.svg" alt="" class="button-icon" />
+          {packageLabel}
+        </a>
+      )}
+      {sourceUrl && (
+        <a href={sourceUrl} class="card-button card-button-source" target="_blank" rel="noopener noreferrer">
+          <img src="/repo.svg" alt="" class="button-icon" />
+          Source
+        </a>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    color: inherit;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .project-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .card-gradient {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(140% 140% at 20% 20%, var(--c1), transparent 68%),
+      radial-gradient(140% 140% at 80% 10%, var(--c2), transparent 68%),
+      radial-gradient(140% 140% at 50% 90%, var(--c3), transparent 68%),
+      #111;
+  }
+  
+    .grain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0.15' /%3E%3C/filter%3E%3Crect width='400' height='200' fill='rgba(255,255,255,0.08)' filter='url(%23noise)' /%3E%3C/svg%3E");
+      background-size: 100% 100%;
+      z-index: 2;
+    }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    padding: 16px;
+    position: relative;
+  }
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .labels-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: #e3f2fd;
+    color: #1976d2;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  .description {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  .buttons-container {
+    display: flex;
+    gap: 0;
+    width: calc(100% + 32px);
+    margin: 24px -16px -16px -16px;
+  }
+
+  .card-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 1;
+    padding: 14px 16px;
+    color: white;
+    text-decoration: none;
+    border: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .button-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.9;
+  }
+
+  .card-button-primary {
+    background-color: #2196f3;
+  }
+
+  .card-button-primary:hover {
+    background-color: #1976d2;
+  }
+
+  .card-button-package {
+    background-color: #ffb907;
+    color: #ffffff;
+  }
+
+  .card-button-package:hover {
+    background-color: #ffb300;
+  }
+
+  .card-button-source {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .card-button-source:hover {
+    background-color: #5a6268;
+  }
+
+  /* Border radius handling */
+  .card-button:first-child {
+    border-radius: 0 0 0 8px;
+  }
+
+  .card-button:last-child {
+    border-radius: 0 0 8px 0;
+  }
+
+  .card-button:only-child {
+    border-radius: 0 0 8px 8px;
+  }
+
+  @media (max-width: 768px) {
+    .card-content {
+      padding: 12px;
+    }
+
+    .card-image {
+      height: 150px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+    }
+
+    .buttons-container {
+      margin: 24px -12px -12px -12px;
+      width: calc(100% + 24px);
+    }
+
+    .card-button {
+      padding: 12px 14px;
+      font-size: 0.9rem;
+    }
+  }
+</style>

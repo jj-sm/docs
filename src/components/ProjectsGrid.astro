@@ -1,0 +1,46 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).filter(
+  (project) => !project.data.hidden
+);
+---
+
+<div class="projects-grid">
+  {projects.map((project) => (
+    <ProjectCard
+      title={project.data.title}
+      description={project.data.description}
+      image={project.data.image}
+      url={project.data.url}
+      labels={project.data.labels}
+      packageLabel={project.data.packageLabel}
+      packageUrl={project.data.packageUrl}
+      sourceUrl={project.data.sourceUrl}
+    />
+  ))}
+</div>
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 900px;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
