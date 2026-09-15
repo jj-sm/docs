@@ -1,0 +1,13 @@
+.main {
+  font-family: 'Atkinson', sans-serif;
+  width: 900px;
+  max-width: calc(100% - 2em);
+  margin: auto;
+  padding: 3em 1em;
+}
+
+.main hr {
+  border: none;
+  border-top: 1px solid rgba(var(--landing-gray-light), 1);
+  margin: 2em 0;
+}

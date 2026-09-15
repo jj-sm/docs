@@ -1,0 +1,55 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* Ported from the old Astro landing page's global.css, so the Docusaurus
+   homepage (src/pages/index.js) can reuse the same look. */
+@font-face {
+  font-family: 'Atkinson';
+  src: url('/fonts/atkinson-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson';
+  src: url('/fonts/atkinson-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2337ff;
+  --ifm-color-primary-dark: #001fff;
+  --ifm-color-primary-darker: #001bf0;
+  --ifm-color-primary-darkest: #0016c6;
+  --ifm-color-primary-light: #3d4fff;
+  --ifm-color-primary-lighter: #4d5eff;
+  --ifm-color-primary-lightest: #7c87ff;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  --landing-gray: 96, 115, 159;
+  --landing-gray-light: 229, 233, 240;
+  --landing-gray-dark: 34, 41, 57;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #7c87ff;
+  --ifm-color-primary-dark: #5e6bff;
+  --ifm-color-primary-darker: #4d5cff;
+  --ifm-color-primary-darkest: #2337ff;
+  --ifm-color-primary-light: #9aa3ff;
+  --ifm-color-primary-lighter: #abb2ff;
+  --ifm-color-primary-lightest: #d4d8ff;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  --landing-gray: 148, 163, 196;
+  --landing-gray-light: 51, 58, 77;
+  --landing-gray-dark: 229, 233, 240;
+}

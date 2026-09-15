@@ -1,0 +1,6 @@
+project:
+  type: default
+
+# Each project's docs/_metadata.yml sets format: docusaurus-md and
+# execute.freeze: auto for the .qmd / .ipynb files under it. Plain .md
+# files (like the intro.md placeholders) are left untouched by Quarto.

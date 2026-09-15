@@ -1,56 +1,40 @@
-name: Deploy to GitHub Pages
+name: Deploy to Cloudflare Pages
 
 on:
-  workflow_dispatch:  # Manual trigger
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main repo with submodules
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: recursive  
-          fetch-depth: 0         
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render Quarto docs (varistar, env-maker, ogle)
+        run: quarto render
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install
 
-      - name: Build Astro landing site
-        run: npm run build
+      - name: Build Docusaurus site
+        run: bun run build
 
-      - name: Copy submodule site into build output
-        run: |
-          mkdir -p dist/Astro-UC-Malla
-          cp -r Astro-UC-Malla/* dist/Astro-UC-Malla
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
-          path: ./dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Replace with your actual Cloudflare Pages project name.
+          command: pages deploy build --project-name=docs-jjsm

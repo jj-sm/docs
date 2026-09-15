@@ -1,0 +1,196 @@
+.projectCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  overflow: hidden;
+  color: inherit;
+  background: var(--ifm-background-surface-color);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.projectCard:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+:global([data-theme='dark']) .projectCard {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+:global([data-theme='dark']) .projectCard:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.cardImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.cardGradient {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(140% 140% at 20% 20%, var(--c1), transparent 68%),
+    radial-gradient(140% 140% at 80% 10%, var(--c2), transparent 68%),
+    radial-gradient(140% 140% at 50% 90%, var(--c3), transparent 68%),
+    #111;
+}
+
+.grain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0.15' /%3E%3C/filter%3E%3Crect width='400' height='200' fill='rgba(255,255,255,0.08)' filter='url(%23noise)' /%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  z-index: 2;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: 16px;
+  position: relative;
+}
+
+.cardContent h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.labelsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+:global([data-theme='dark']) .label {
+  background-color: rgba(33, 150, 243, 0.18);
+  color: #90caf9;
+}
+
+.description {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ifm-color-emphasis-700, #666);
+  line-height: 1.5;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 0;
+  width: calc(100% + 32px);
+  margin: 24px -16px -16px -16px;
+}
+
+.cardButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  padding: 14px 16px;
+  color: white !important;
+  text-decoration: none !important;
+  border: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.9;
+  border-radius: 0;
+}
+
+.cardButtonPrimary {
+  background-color: #2196f3;
+}
+
+.cardButtonPrimary:hover {
+  background-color: #1976d2;
+}
+
+.cardButtonPackage {
+  background-color: #ffb907;
+  color: #ffffff !important;
+}
+
+.cardButtonPackage:hover {
+  background-color: #ffb300;
+}
+
+.cardButtonSource {
+  background-color: #6c757d;
+  color: white !important;
+}
+
+.cardButtonSource:hover {
+  background-color: #5a6268;
+}
+
+.cardButton:first-child {
+  border-radius: 0 0 0 8px;
+}
+
+.cardButton:last-child {
+  border-radius: 0 0 8px 0;
+}
+
+.cardButton:only-child {
+  border-radius: 0 0 8px 8px;
+}
+
+@media (max-width: 768px) {
+  .cardContent {
+    padding: 12px;
+  }
+
+  .cardImage {
+    height: 150px;
+  }
+
+  .cardContent h3 {
+    font-size: 1.1rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .buttonsContainer {
+    margin: 24px -12px -12px -12px;
+    width: calc(100% + 24px);
+  }
+
+  .cardButton {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+}
