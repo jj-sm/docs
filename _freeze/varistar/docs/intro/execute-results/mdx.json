@@ -1,0 +1,12 @@
+{
+  "hash": "e5087c51d58ede59a5e407f975c7abe2",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\nsidebar_position: 1\ntitle: varistar\n---\n\n# varistar\n\n**varistar** manages and analyzes timeseries and lightcurve photometry for\nvariable stars, coming from multiple survey sources (OGLE, TESS, Gaia DR3,\nor your own CSV/arrays).\n\n## Install\n\n```bash\npip install varistar\n# or\nuv add varistar\n```\n\n## Quickstart\n\nEvery workflow starts the same way: load photometry into a `TimeSeries`,\nwrap it in a `LightCurve`, and let `find_best_period` + `plot_best` do the\nheavy lifting.\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\nfrom varistar import TimeSeries, LightCurve\n\n# Using synthetic data here so this page runs standalone --\n# see \"Loading Data\" for real survey files.\nfrom _synthetic import make_sinusoidal_lightcurve\n\nts = TimeSeries(magnitude=\"mag I\", time_scale=\"HJD\")\nts.load_data_from_df(make_sinusoidal_lightcurve(), data_id=\"synthetic_001\")\n\nlc = LightCurve(ts)\nlc.find_best_period()\nlc.plot_best()\n```\n\n::: {.cell-output .cell-output-display}\n![](intro_files/figure-markdown_strict/cell-2-output-1.png){width=758 height=372}\n:::\n:::\n\n\n## Where to go next\n\n- **[Loading Data](./loading-data)** — OGLE `.dat`, TESS, Gaia DR3, and plain CSV/arrays.\n- **[Cleaning & Statistics](./cleaning-stats)** — outlier removal, binning, descriptive stats.\n- **[Period Finding](./period-finding)** — Lomb-Scargle, PDM, PDM2, Spectrum Resampling.\n- **[Phase Folding & Models](./phase-folding)** — Fourier and Gaussian model fits.\n- **[Classification](./classification)** — variability indices and eclipsing-binary detection.\n- **[Batch Workflows](./batch-testgroup)** — `TestGroup` for many stars at once.\n- **[ML Feature Pipeline](./ml-features)** — feature extraction and clustering.\n- **[Visualization](./visualization)** — publication styling and interactive plots.\n- **[API Reference](./api-reference)**\n\n",
+    "supporting": [
+      "intro_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

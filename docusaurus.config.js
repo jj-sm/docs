@@ -19,7 +19,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'Projects Documentation',
   tagline: 'jj-sm public projects documentation',
-  favicon: 'img/favicon.svg',
+  favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -33,6 +33,46 @@ const config = {
   projectName: 'docs',
 
   onBrokenLinks: 'throw',
+
+  // `favicon` above only emits one <link rel="icon">. The rest of the
+  // generated favicon package (static/img/favicon-*.png, apple-touch-icon,
+  // android-chrome icons, site.webmanifest) is wired in here so browsers/
+  // devices that don't use the SVG favicon still get the same icon.
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/img/favicon-32x32.png',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/img/favicon-16x16.png',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/img/apple-touch-icon.png',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'manifest',
+        href: '/img/site.webmanifest',
+      },
+    },
+  ],
 
   i18n: {
     defaultLocale: 'en',

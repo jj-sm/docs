@@ -1,0 +1,12 @@
+{
+  "hash": "d690004f005f00ca42f80e31ce5279f3",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\nsidebar_position: 5\ntitle: Phase Folding & Models\n---\n\n# Phase Folding & Model Fitting\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\nfrom varistar import TimeSeries, LightCurve\nfrom _synthetic import make_sinusoidal_lightcurve, make_eclipsing_lightcurve\n```\n:::\n\n\n## Fourier fit (sinusoidal variables)\n\n::: {.cell execution_count=2}\n``` {.python .cell-code}\nts_sine = TimeSeries(magnitude=\"mag I\", time_scale=\"HJD\")\nts_sine.load_data_from_df(make_sinusoidal_lightcurve(), data_id=\"sine_variable\")\n\nlc_sine = LightCurve(ts_sine)\nlc_sine.plot_phased(fit_model=\"fourier\", n_harmonics=4, show_residuals=True)\n```\n\n::: {.cell-output .cell-output-display}\n![](phase-folding_files/figure-markdown_strict/cell-3-output-1.png){width=758 height=372}\n:::\n:::\n\n\n## Gaussian fit (eclipsing binaries)\n\nThe Double Super-Gaussian model handles the sharp, asymmetric dips a\nFourier series smooths over:\n\n::: {.cell execution_count=3}\n``` {.python .cell-code}\nts_eb = TimeSeries(magnitude=\"mag I\", time_scale=\"HJD\")\nts_eb.load_data_from_df(make_eclipsing_lightcurve(), data_id=\"eb_variable\")\n\nlc_eb = LightCurve(ts_eb)\nlc_eb.plot_phased(fit_model=\"gaussian\", show_residuals=True)\n```\n\n::: {.cell-output .cell-output-display}\n![](phase-folding_files/figure-markdown_strict/cell-4-output-1.png){width=758 height=372}\n:::\n:::\n\n\n## `plot_best`: one call, no guessing\n\n`plot_best` finds the best period, runs the eclipsing-binary check, and\npicks Fourier or Gaussian (doubling the period if that fits better)\nautomatically:\n\n::: {.cell execution_count=4}\n``` {.python .cell-code}\nlc_eb.plot_best()\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[score_eb] Possible EB: eb_variable | ρ_dip=62.40  ρ_global=457.00\n```\n:::\n\n::: {.cell-output .cell-output-display}\n![](phase-folding_files/figure-markdown_strict/cell-5-output-2.png){width=758 height=372}\n:::\n:::\n\n\n**Next:** [Classification](./classification).\n\n",
+    "supporting": [
+      "phase-folding_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

@@ -1,0 +1,96 @@
+---
+sidebar_position: 2
+title: Loading Data
+---
+
+
+
+
+# Loading Data
+
+`varistar.catalog` has one loader per survey format.
+`TimeSeries.load_data_from_file` auto-dispatches based on file
+extension; the catalog modules can also be called directly when you need
+more control.
+
+## OGLE-style `.dat` files
+
+
+```python
+from varistar import TimeSeries
+
+ts = TimeSeries(magnitude="mag I", time_scale="HJD")
+ts.load_data_from_file("data/OGLE-BLG-ECL-000001.dat")  # -> catalog.ogle.load_dat
+ts.summary()
+```
+
+## TESS
+
+
+```python
+from varistar.catalog.tess import load_from_tic, load_fits
+
+df = load_from_tic(tic_id=123456789)        # via lightkurve
+df = load_fits("data/tess_sector_42.fits")  # from a local FITS file
+```
+
+## Gaia DR3 epoch photometry
+
+
+```python
+from varistar.catalog.gaiadr3 import load_csv
+
+df = load_csv("data/gaia_dr3_epoch_photometry.csv")
+```
+
+## Generic CSV / your own arrays
+
+For anything else — a lab CSV, a pipeline export, or data you already
+have in memory — use the generic loader or build a DataFrame directly
+and hand it to `load_data_from_df`. This is also what every other page
+in this docs instance uses under the hood:
+
+
+```python
+from varistar import TimeSeries
+from _synthetic import make_sinusoidal_lightcurve
+
+df = make_sinusoidal_lightcurve()
+
+ts = TimeSeries(magnitude="mag I", time_scale="HJD")
+ts.load_data_from_df(df, data_id="synthetic_001")
+ts.summary()
+```
+
+``` text
+[synthetic_001]  n=400  baseline=118.2 d  <mag>=14.991  amp=0.579
+```
+
+Starting from three plain numpy arrays instead of a DataFrame works the
+same way via `catalog.generic.from_arrays`:
+
+
+```python
+import numpy as np
+from varistar.catalog.generic import from_arrays
+
+t = np.asarray(df["hjd"])
+y = np.asarray(df["mag_i"])
+e = np.asarray(df["m_error"])
+
+pl_df = from_arrays(t, y, e, col_names=["hjd", "mag_i", "m_error"])
+
+ts2 = TimeSeries(magnitude="mag I", time_scale="HJD")
+ts2.load_data_from_df(pl_df, data_id="from_arrays_demo")
+len(ts2)
+```
+
+``` text
+400
+```
+
+`from_arrays` defaults to column names `["hjd", "mag", "err"]` — pass
+`col_names` explicitly if you want them to match a `TimeSeries` built
+with custom `colnames`.
+
+**Next:** [Cleaning & Statistics](./cleaning-stats).

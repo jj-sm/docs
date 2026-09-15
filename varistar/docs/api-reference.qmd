@@ -1,0 +1,50 @@
+---
+sidebar_position: 10
+title: API Reference
+---
+
+# API Reference
+
+The source already carries numpy-style docstrings (Parameters/Returns) for
+every public function, so `help()` gives a complete reference inline:
+
+```{python}
+from varistar import TimeSeries
+
+help(TimeSeries.mask_iqr_outliers)
+```
+
+## Auto-generating this page
+
+For a full reference without hand-maintaining it, consider
+[quartodoc](https://machow.github.io/quartodoc/) — it reads the same
+docstrings and generates one Quarto page per module/class, and slots into
+this same `docusaurus-md` pipeline. Illustrative config (run as a separate
+build step, not inside this notebook):
+
+```yaml
+# _quartodoc.yml
+quartodoc:
+  package: varistar
+  sections:
+    - title: Core
+      contents: [TimeSeries, LightCurve, TestGroup]
+    - title: Period finding
+      contents: [period.lomb_scargle, period.pdm, period.entropy]
+    - title: Classification
+      contents: [classify.variability, classify.eb_detector]
+```
+
+## Module map
+
+| Module | Covers |
+|---|---|
+| `varistar.timeseries` | `TimeSeries` — I/O, cleaning, stats |
+| `varistar.lightcurve` | `LightCurve` — period search, folding, fitting |
+| `varistar.groups` | `TestGroup` — batch workflows |
+| `varistar.catalog` | Survey loaders (OGLE, TESS, Gaia DR3, generic) |
+| `varistar.period` | Lomb-Scargle, PDM, PDM2, SR, entropy/AoV |
+| `varistar.models` | Fourier and Gaussian model functions |
+| `varistar.classify` | Variability indices, EB detection |
+| `varistar.ml` | Feature extraction, `Dataset`, `FeaturePipeline` |
+| `varistar.viz` | Matplotlib styling, Plotly interactive plots |

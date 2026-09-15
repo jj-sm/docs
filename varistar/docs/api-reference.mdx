@@ -1,0 +1,124 @@
+---
+sidebar_position: 10
+title: API Reference
+---
+
+
+
+
+export const quartoRawHtml =
+[`
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Module</th>
+<th>Covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>varistar.timeseries</code></td>
+<td><code>TimeSeries</code> — I/O, cleaning, stats</td>
+</tr>
+<tr>
+<td><code>varistar.lightcurve</code></td>
+<td><code>LightCurve</code> — period search, folding, fitting</td>
+</tr>
+<tr>
+<td><code>varistar.groups</code></td>
+<td><code>TestGroup</code> — batch workflows</td>
+</tr>
+<tr>
+<td><code>varistar.catalog</code></td>
+<td>Survey loaders (OGLE, TESS, Gaia DR3, generic)</td>
+</tr>
+<tr>
+<td><code>varistar.period</code></td>
+<td>Lomb-Scargle, PDM, PDM2, SR, entropy/AoV</td>
+</tr>
+<tr>
+<td><code>varistar.models</code></td>
+<td>Fourier and Gaussian model functions</td>
+</tr>
+<tr>
+<td><code>varistar.classify</code></td>
+<td>Variability indices, EB detection</td>
+</tr>
+<tr>
+<td><code>varistar.ml</code></td>
+<td>Feature extraction, <code>Dataset</code>, <code>FeaturePipeline</code></td>
+</tr>
+<tr>
+<td><code>varistar.viz</code></td>
+<td>Matplotlib styling, Plotly interactive plots</td>
+</tr>
+</tbody>
+</table>
+`];
+
+# API Reference
+
+The source already carries numpy-style docstrings (Parameters/Returns)
+for every public function, so `help()` gives a complete reference
+inline:
+
+
+```python
+from varistar import TimeSeries
+
+help(TimeSeries.mask_iqr_outliers)
+```
+
+``` text
+Help on function mask_iqr_outliers in module varistar.timeseries:
+
+mask_iqr_outliers(self, column: 'str | None' = None, error_column: 'str | None' = None, k: 'float' = 1.5) -> 'pl.Series'
+    Build an IQR-based outlier mask on the fractional photometric error.
+
+    Does **not** modify ``timeseries_df`` — pass the returned mask to
+    ``apply_mask()`` to actually remove the flagged rows.
+
+    Parameters
+    ----------
+    column : str | None
+        Magnitude column (defaults to ``self.mag_col``).
+    error_column : str | None
+        Error column (defaults to ``self.err_col``).
+    k : float
+        IQR multiplier.  Standard box-plot uses 1.5; conservative = 3.0.
+
+    Returns
+    -------
+    pl.Series[bool]
+        True where the fractional error is an outlier.
+```
+
+## Auto-generating this page
+
+For a full reference without hand-maintaining it, consider
+[quartodoc](https://machow.github.io/quartodoc/) — it reads the same
+docstrings and generates one Quarto page per module/class, and slots
+into this same `docusaurus-md` pipeline. Illustrative config (run as a
+separate build step, not inside this notebook):
+
+
+```yaml
+# _quartodoc.yml
+quartodoc:
+  package: varistar
+  sections:
+    - title: Core
+      contents: [TimeSeries, LightCurve, TestGroup]
+    - title: Period finding
+      contents: [period.lomb_scargle, period.pdm, period.entropy]
+    - title: Classification
+      contents: [classify.variability, classify.eb_detector]
+```
+
+## Module map
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[0] }} />

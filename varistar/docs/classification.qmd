@@ -1,0 +1,61 @@
+---
+sidebar_position: 6
+title: Classification
+---
+
+# Variability & Eclipsing-Binary Classification
+
+## Variability indices
+
+`classify.variability` computes a set of scalar indices used to separate
+noise from genuine variability — Stetson J/K, IQR, η, amplitude, and more.
+
+```{python}
+from varistar import TimeSeries, LightCurve
+from varistar.classify.variability import compute_all_indices
+from _synthetic import make_sinusoidal_lightcurve, make_eclipsing_lightcurve
+
+ts_sine = TimeSeries(magnitude="mag I", time_scale="HJD")
+ts_sine.load_data_from_df(make_sinusoidal_lightcurve(), data_id="sine_variable")
+compute_all_indices(ts_sine)
+```
+
+```{python}
+ts_eb = TimeSeries(magnitude="mag I", time_scale="HJD")
+ts_eb.load_data_from_df(make_eclipsing_lightcurve(), data_id="eb_variable")
+compute_all_indices(ts_eb)
+```
+
+## Eclipsing-binary detection
+
+`score_eb` phase-folds at a given period, fits a Fourier series, and checks
+whether the residual pattern looks like a sharp eclipse Fourier can't model
+well:
+
+```{python}
+from varistar.classify.eb_detector import score_eb, classify_eb_type
+from varistar.models.gaussian import fit_double_super_gaussian
+
+lc_eb = LightCurve(ts_eb)
+lc_eb.run_ls()
+best_period = lc_eb.periods[0]
+
+is_eb, mea, _ = score_eb(lc_eb, period=best_period)
+is_eb, mea
+```
+
+## Morphology: detached, semi-detached, or contact
+
+Once a light curve is flagged as an EB, `classify_eb_type` reads the shape
+parameter of a fitted Double Super-Gaussian to name the eclipse morphology:
+
+```{python}
+t = ts_eb.timeseries_df[ts_eb.time_col].to_numpy()
+y = ts_eb.timeseries_df[ts_eb.mag_col].to_numpy()
+phase = ((t - t.min()) / best_period) % 1.0
+
+popt, mea_gauss = fit_double_super_gaussian(phase, y)
+classify_eb_type(popt)
+```
+
+**Next:** [Batch Workflows](./batch-testgroup).
