@@ -9,9 +9,9 @@ export const DEFAULT_PROJECT = {
 };
 
 const docsProjects = {
-  varistar: {name: 'Varistar', repo: 'https://github.com/jj-sm/varistar', route: '/varistar/intro'},
-  'env-maker': {name: 'env-maker', repo: 'https://github.com/jj-sm/env-maker', route: '/env-maker/intro'},
-  ogle: {name: 'OGLE', repo: 'https://github.com/jj-sm/ogle', route: '/ogle/intro'},
+  varistar: {name: 'Varistar', repo: 'https://github.com/jj-sm/varistar', route: '/varistar/'},
+  'env-maker': {name: 'env-maker', repo: 'https://github.com/jj-sm/env-maker', route: '/env-maker/'},
+  ogle: {name: 'OGLE', repo: 'https://github.com/jj-sm/ogle', route: '/ogle/'},
   html2wikijs: {name: 'HTML2WikiJS', repo: 'https://github.com/jj-sm/html2wikijs', route: 'https://github.com/jj-sm/html2wikijs'},
   'airac-tools': {name: 'AIRAC Tools', repo: 'https://github.com/jj-sm/airac-tools', route: 'https://github.com/jj-sm/airac-tools'},
 };

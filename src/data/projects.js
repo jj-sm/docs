@@ -8,7 +8,7 @@ const projects = [
   {
     title: 'varistar',
     description: 'A tool for analyzing and visualizing variable star data.',
-    url: '/varistar/intro',
+    url: '/varistar/',
     labels: ['Python', 'Astrophysics'],
     packageLabel: 'pip',
     packageUrl: 'https://pypi.org/project/varistar/',
@@ -17,7 +17,7 @@ const projects = [
   {
     title: 'env-maker',
     description: 'A tool for managing development environments.',
-    url: '/env-maker/intro',
+    url: '/env-maker/',
     labels: ['Python', 'Development', 'Tools'],
     packageLabel: 'pip',
     packageUrl: 'https://pypi.org/project/env-maker/',
@@ -27,7 +27,7 @@ const projects = [
     title: 'ogle',
     description:
       'A Python package to interact with the OGLE (Optical Gravitational Lensing Experiment) database, allowing users to query and analyze data related to variable stars and microlensing events.',
-    url: '/ogle/intro',
+    url: '/ogle/',
     labels: ['Python', 'Astrophysics', 'Tools'],
     packageLabel: 'pip',
     packageUrl: 'https://pypi.org/project/ogle/',
