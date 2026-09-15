@@ -36,7 +36,7 @@ const projects = [
   {
     title: 'airac-tools',
     description: 'pip package to manage AIRAC cycles dates and related tools.',
-    url: 'https://airac-tools.docs.jjsm.science',
+    url: '/airac-tools/intro',
     labels: ['Python', 'Aviation', 'Tools'],
     packageLabel: 'pip',
     packageUrl: 'https://pypi.org/project/airac-tools/',
@@ -45,7 +45,7 @@ const projects = [
   {
     title: 'html2wikijs',
     description: 'A tool to convert HTML content to WikiJS markup.',
-    url: 'https://html2wikijs.docs.jjsm.science',
+    url: '/html2wikijs/intro',
     labels: ['Python', 'JavaScript', 'Tools'],
     sourceUrl: 'https://github.com/jj-sm/html2wikijs',
   },
@@ -60,7 +60,7 @@ const projects = [
   {
     title: 'TemplaTeX',
     description: 'WIP',
-    url: 'https://tex.docs.jjsm.science',
+    url: '/templatex/intro',
     labels: ['Rust', 'TeX', 'CLI', 'Tools'],
     hidden: true,
   },
@@ -68,7 +68,7 @@ const projects = [
     title: 'tinto',
     description:
       'Transient Identification and Noise Transformation Operations: TINTO is a Python-based framework designed to simulate, clean, and classify populations of variable stars. By modeling the underlying physics of stellar variability alongside the observational biases of modern surveys (like Gaia, LSST, and ZTF, RUBIN, OGLE)',
-    url: 'https://tinto.docs.jjsm.science',
+    url: '/tinto/intro',
     labels: ['Python', 'Astrophysics'],
     hidden: true,
   },

@@ -18,7 +18,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Projects Documentation',
-  tagline: 'jj-sm public projects documentation index',
+  tagline: 'jj-sm public projects documentation',
   favicon: 'img/favicon.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -95,39 +95,28 @@ const config = {
       colorMode: {
         respectPrefersColorScheme: true,
       },
+      // navbar.title/items and footer.links are intentionally NOT set here:
+      // src/theme/Navbar/Content and src/theme/Footer render per-project
+      // content instead (name + GitHub link, from src/data/docsProjects.js),
+      // since this global themeConfig can't vary by route. logo/colorMode
+      // stay here since the toggle and Logo components still read them.
       navbar: {
-        title: 'jj-sm • Projects Documentation',
         logo: {
           alt: 'Logo',
           src: 'img/logo.png',
+          width: 32,
+          height: 32,
         },
-        // No links to individual projects here on purpose — each project's
-        // docs are independent and only navigable via their own sidebar.
-        items: [
-          {
-            href: 'https://www.linkedin.com/in/jj-sm/',
-            position: 'right',
-            label: 'LinkedIn',
-          },
-          {
-            href: 'https://github.com/jj-sm',
-            position: 'right',
-            label: 'GitHub',
-          },
-        ],
       },
       footer: {
         style: 'light',
-        links: [
-          {
-            title: 'Elsewhere',
-            items: [
-              {label: 'GitHub', href: 'https://github.com/jj-sm'},
-              {label: 'LinkedIn', href: 'https://www.linkedin.com/in/jj-sm/'},
-              {label: 'Email', href: 'mailto:contact@jjsm.science'},
-            ],
-          },
-        ],
+        logo: {
+          alt: 'Logo',
+          src: 'img/logo.png',
+          href: '/',
+          width: 32,
+          height: 32,
+        },
         copyright: `Copyright © ${new Date().getFullYear()} Juan José Sánchez Medina. All rights reserved.`,
       },
       prism: {
